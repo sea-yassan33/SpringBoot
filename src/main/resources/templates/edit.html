@@ -12,10 +12,10 @@
 <body class="container">
 	<h1 class="display-4 mb-4" th:text="${title}"></h1>
 	<p th:text="${msg}"></p>
-	<form method="post" action="/test/" th:object="${formModel}">
+	<form method="post" action="/edit/" th:object="${formModel}">
+		<input type="hidden" name="id" th:value="*{id}" />
 		<div class="mb-3">
 			<label for="name" class="form-label">Name</label>
-			<!-- formModel内の変数を呼び出す際は*{name} -->
 			<input type="text" class="form-control" name="name" th:value="*{name}" />
 		</div>
 		<div class="mb-3">
@@ -30,31 +30,8 @@
 			<label for="name" class="form-label">Memo</label>
 			<textarea class="form-control" name="memo" th:value="*{memo}"></textarea>
 		</div>
-		<input type="submit" class="btn btn-primary" value="Create"/>
+		<input type="submit" class="btn btn-primary" value="Update"/>
 	</form>
-	
-	<table class="table">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Name</th>
-				<th>Mail</th>
-				<th>Age</th>
-				<th>edit</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="item : ${data}">
-				<td th:text="${item.id}"></td>
-				<td th:text="${item.name}"></td>
-				<td th:text="${item.mail}"></td>
-				<!-- インライン形式 -->
-				<td>[[${item.age}]]</td>
-				<!-- 文字連結　@{'/edit/' + ${item.id}}　 -->
-				<td><a th:href="@{'/edit/' + ${item.id}}" class="btn btn-primary">編集</a></td>
-			</tr>
-		</tbody>
-	</table>
 	
 <!-- ▼▼▼ JSファイル読み込み ▼▼▼ -->
 <script th:src="@{/js/index.js}"></script> 

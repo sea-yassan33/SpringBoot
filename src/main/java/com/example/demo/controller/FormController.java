@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,6 +46,26 @@ public class FormController {
 		repository.saveAndFlush(person);
 		return new ModelAndView("redirect:/test/");
 		
+	}
+	
+	/*
+	 * editに対するコントロール
+	 */
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView edit(@ModelAttribute Person person, @PathVariable Long id, ModelAndView mav) {
+		mav.setViewName("edit");
+		mav.addObject("title", "edit Person");
+		// パラメータから渡されたidを元にデータを取得
+		Optional<Person> data = repository.findById(id);
+		mav.addObject("formModel",data.get());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/edit/", method = RequestMethod.POST)
+	@Transactional
+	public ModelAndView update(@ModelAttribute Person person, ModelAndView mav) {
+		repository.saveAndFlush(person);
+		return new ModelAndView("redirect:/test/");
 	}
 	
 	/*

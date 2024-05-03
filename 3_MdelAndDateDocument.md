@@ -56,3 +56,5 @@ public interface PearsonRepository extends JpaRepository<Person, Long>{
   - データベースの変更を伴うような操作は@Transactionalをつける事が基本
   
 ## 4.Edit
+- データ編集
+- 編集画面へ遷移
