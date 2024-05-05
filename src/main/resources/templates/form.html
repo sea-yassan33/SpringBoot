@@ -41,6 +41,7 @@
 				<th>Mail</th>
 				<th>Age</th>
 				<th>edit</th>
+				<th>delet</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -52,6 +53,7 @@
 				<td>[[${item.age}]]</td>
 				<!-- 文字連結　@{'/edit/' + ${item.id}}　 -->
 				<td><a th:href="@{'/edit/' + ${item.id}}" class="btn btn-primary">編集</a></td>
+				<td><a th:href="@{'/delete/' + ${item.id}}" class="btn btn-primary">削除</a></td>
 			</tr>
 		</tbody>
 	</table>

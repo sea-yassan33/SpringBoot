@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.dao.Person;
@@ -48,7 +49,7 @@ public class FormController {
 		
 	}
 	
-	/*
+	/**
 	 * editに対するコントロール
 	 */
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -65,6 +66,27 @@ public class FormController {
 	@Transactional
 	public ModelAndView update(@ModelAttribute Person person, ModelAndView mav) {
 		repository.saveAndFlush(person);
+		return new ModelAndView("redirect:/test/");
+	}
+	
+	/**
+	 * delitに対するコントロール
+	 */
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public ModelAndView deleit(@PathVariable Long id, ModelAndView mav) {
+		mav.setViewName("delete");
+		mav.addObject("title", "Delet Person.");
+		mav.addObject("msg", "こちらのレコードを削除しますか？");
+		Optional<Person> data = repository.findById(id);
+		mav.addObject("formModel", data.get());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/delete/", method = RequestMethod.POST)
+	@Transactional
+	public ModelAndView remobe(@RequestParam Long idDelet,ModelAndView mav) {
+		// idDelitで渡されたパラメータを素に対象のidを削除
+		repository.deleteById(idDelet);
 		return new ModelAndView("redirect:/test/");
 	}
 	
