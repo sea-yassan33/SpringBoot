@@ -13,18 +13,24 @@
 	<h1 class="display-4 mb-4" th:text="${title}"></h1>
 	<p th:text="${msg}"></p>
 	<form method="post" action="/test/" th:object="${formModel}">
+		<ul>
+			<li th:each="error : ${#fields.detailedErrors()}" th:text="${error.message}" class="text text-danger"></li>
+		</ul>
 		<div class="mb-3">
 			<label for="name" class="form-label">Name</label>
 			<!-- formModel内の変数を呼び出す際は*{name} -->
 			<input type="text" class="form-control" name="name" th:value="*{name}" />
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text text-danger"></div>
 		</div>
 		<div class="mb-3">
 			<label for="name" class="form-label">Mail</label>
 			<input type="text" class="form-control" name="mail" th:value="*{mail}" />
+			<div th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" class="text text-danger"></div>
 		</div>
 		<div class="mb-3">
 			<label for="name" class="form-label">Age</label>
 			<input type="number" class="form-control" name="age" th:value="*{age}" />
+			<div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="text text-danger"></div>
 		</div>
 		<div class="mb-3">
 			<label for="name" class="form-label">Memo</label>

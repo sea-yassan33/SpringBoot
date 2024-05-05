@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +28,7 @@ public class FormController {
 	String entry = "form";
 	
 	@RequestMapping("/test/")
-	public ModelAndView index(
-			@ModelAttribute("formModel")Person person,
-			ModelAndView mav) {
+	public ModelAndView index(@ModelAttribute("formModel") Person person,ModelAndView mav) {
 		mav.setViewName(entry);
 		mav.addObject("title", "Hello page");
 		mav.addObject("msg","this is JPA sample data.");
@@ -40,13 +40,24 @@ public class FormController {
 	
 	@RequestMapping(value= "/test/", method = RequestMethod.POST)
 	@Transactional
-	public ModelAndView form(
-			@ModelAttribute("formModel") Person person,
-			ModelAndView mav) {
-		// formで取得した内容を保存
-		repository.saveAndFlush(person);
-		return new ModelAndView("redirect:/test/");
+	public ModelAndView form(@ModelAttribute("formModel") @Validated Person person,BindingResult result,ModelAndView mav) {
+		ModelAndView res = null;
+		System.out.println(result.getFieldErrors());
+		//バリデーションエラーの有無
+		if(!result.hasErrors()) {
+			// formで取得した内容を保存
+			repository.saveAndFlush(person);
+			return new ModelAndView("redirect:/test/");
+		}else {
+			mav.setViewName(entry);
+			mav.addObject("title", "Hello page");
+			mav.addObject("msg","入力エラーです");
+			Iterable<Person> list = repository.findAll();
+			mav.addObject("data",list);
+			res = mav;
+		}
 		
+		return res;
 	}
 	
 	/**

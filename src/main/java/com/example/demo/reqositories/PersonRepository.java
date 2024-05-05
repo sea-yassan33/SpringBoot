@@ -16,10 +16,10 @@ public interface PersonRepository extends JpaRepository<Person, Long>{
 	
 	/**
 	 * Like検索 <br>
-	 * fintBy[ColumName]Like <br>
+	 * findBy[ColumName]Like <br>
 	 * SQL: from [DataName] where [CollumName] like ?[検索内容]
 	 */
-	public List<Person> findByIdLike(String name);
+	public List<Person> findByNameLike(String name);
 	
 	/**
 	 * Between <br>

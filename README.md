@@ -57,3 +57,9 @@ https://dev.classmethod.jp/articles/use_spring-boot-jpa-jpql/
 |findByIdOrderByIdDesc(String id)|FROM mydata WHERE id = '引数id' ORDER BY id DESC|
 |findByIdIn(String[] ids)|FROM mydata WHERE id IN '引数に配列ids'|
 |findByIdNotIn(ArrayList ids)|FROM mydata WHERE id NOT IN '引数にコレクションids'|
+
+## バリデーションについて
+- パッケージの追加
+```
+implementation 'org.springframework.boot:spring-boot-starter-validation'
+```
