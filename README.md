@@ -31,3 +31,29 @@
 
 ## 8.モデルとデータベース
 - [Document](./3_MdelAndDateDocument.md)
+
+
+## JpaRepositoryメソッドについて
+- Repositoryインタフェースを定義
+- JPQLというSQLを簡易化したような言語機能が内臓されている
+- メソッド名を基にDB処理内容を自動生成
+https://dev.classmethod.jp/articles/use_spring-boot-jpa-jpql/
+
+|メソッド名の作成例|実行されるJPQL|
+|:----|:----|
+|findById(String id)|FROM mydata WHERE id = '引数id'|
+|findByIdNot(String id)|FROM mydata WHERE id <> '引数id'|
+|findByIdAndTitle(String id, String title)|FROM mydata WHERE id = '引数id' and title = '引数title'|
+|findByIdOrTitle(String id, String title)|FROM mydata WHERE id = '引数id' or title = '引数title'|
+|findByIdBetween(String start, String end)|FROM mydata WHERE id BETWEEN '引数start' and '引数end'|
+|findByIdLessThan(String id)|FROM mydata WHERE id < '引数id'|
+|findByIdGreaterThan(String id)|FROM mydata WHERE id > '引数id'|
+|findByCountIsNull()|FROM mydata WHERE count IS NULL|
+|findByCountIsNotNull()|FROM mydata WHERE count IS NOT NULL|
+|findByTitleLike(String word)|FROM mydata WHERE title LIKE '引数word'|
+|（ワイルドカードは引数に渡す時点で書いておく必要が有ります。）|
+|findByTitleNotLike(String word)|FROM mydata WHERE title LIKE '引数word'|
+|findByIdOrderByTitleAsc(String id)|FROM mydata WHERE id = '引数id' ORDER BY title ASC|
+|findByIdOrderByIdDesc(String id)|FROM mydata WHERE id = '引数id' ORDER BY id DESC|
+|findByIdIn(String[] ids)|FROM mydata WHERE id IN '引数に配列ids'|
+|findByIdNotIn(ArrayList ids)|FROM mydata WHERE id NOT IN '引数にコレクションids'|

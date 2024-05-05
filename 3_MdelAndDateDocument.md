@@ -56,5 +56,12 @@ public interface PearsonRepository extends JpaRepository<Person, Long>{
   - データベースの変更を伴うような操作は@Transactionalをつける事が基本
   
 ## 4.Edit
-- データ編集
+- データのupdate機能
 - 編集画面へ遷移
+https://github.com/sea-yassan33/SpringBoot/commit/f2af5db53287e26ec2bd2ccd4bb4402d4dddf4ca
+
+## 5.Delet
+- データのdelete機能
+https://github.com/sea-yassan33/SpringBoot/commit/162b211ba551af2dedc36ac25da9a68131a7e497
+
+
