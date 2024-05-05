@@ -145,8 +145,8 @@ public class FormController {
 				mav.addObject("data", list);
 			}else {
 				mav.addObject("title","検索画面");
-				mav.addObject("msg","「" + param2 + "」が含まれている名前検索結果");
-				Iterable<Person> list = dto.findByName(param2) ;
+				mav.addObject("msg","「" + param2 + "」が含まれている検索結果");
+				Iterable<Person> list = dto.find(param2) ;
 				mav.addObject("data", list);
 			}
 		}

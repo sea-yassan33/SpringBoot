@@ -68,3 +68,8 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 - エンティティを操作するための機能
 - DAOインターフェイスを作成
 - DAOインターフェイスを継承してDtoクラスを作成
+
+## JPQLによるデータ操作
+- データベースを操作するための簡易言語
+
+## Criteria APIによるデータ操作
