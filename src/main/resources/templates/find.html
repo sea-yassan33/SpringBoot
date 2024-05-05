@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- ▼▼▼ BootStrap読み込み ▼▼▼ -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css" integrity="sha384-fFxL8wXRpg9gVqGpY+URMtLr3fLL0WBbo4NBQ+IWwMDYjIjI5VQ46XlJm5+BUlXJ" crossorigin="anonymous">
+<!-- ▲▲▲ BootStrap読み込み ▲▲▲ -->
+<link th:href="@{/css/index.css}" rel="stylesheet">
+<title>Find page</title>
+</head>
+<body class="container">
+	<h1 class="display-4 mb-4" th:text="${title}"></h1>
+	<p th:text="${msg}"></p>
+	
+	<form method="post" action="/find/">
+		<p>ID検索</p>
+		<div class="input-group">
+			<input type="text" class="form-control me-1" name="findStr" th:value="${value}" />
+			<span class="input-group-btn">
+				<input type="submit" class="btn btn-primary px-4" value="Click">
+			</span>
+		</div>
+	</form>
+	<br>
+	<form method="post" action="/find/">
+		<p>名前検索</p>
+		<div class="input-group">
+			<input type="text" class="form-control me-1" name="findNameStr" th:value="${value}" />
+			<span class="input-group-btn">
+				<input type="submit" class="btn btn-primary px-4" value="Click">
+			</span>
+		</div>
+	</form>
+	<hr>
+	<a href="/find/" class="btn btn-primary">全てのデータを表示</a>
+	
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Mail</th>
+				<th>Age</th>
+				<th>edit</th>
+				<th>delet</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="item : ${data}">
+				<td th:text="${item.id}"></td>
+				<td th:text="${item.name}"></td>
+				<td th:text="${item.mail}"></td>
+				<!-- インライン形式 -->
+				<td>[[${item.age}]]</td>
+				<!-- 文字連結　@{'/edit/' + ${item.id}}　 -->
+				<td><a th:href="@{'/edit/' + ${item.id}}" class="btn btn-primary">編集</a></td>
+				<td><a th:href="@{'/delete/' + ${item.id}}" class="btn btn-primary">削除</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+<!-- ▼▼▼ JSファイル読み込み ▼▼▼ -->
+<script th:src="@{/js/index.js}"></script> 
+</body>
+</html>

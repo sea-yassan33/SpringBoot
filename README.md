@@ -63,3 +63,8 @@ https://dev.classmethod.jp/articles/use_spring-boot-jpa-jpql/
 ```
 implementation 'org.springframework.boot:spring-boot-starter-validation'
 ```
+
+## EntityManagerについて
+- エンティティを操作するための機能
+- DAOインターフェイスを作成
+- DAOインターフェイスを継承してDtoクラスを作成
