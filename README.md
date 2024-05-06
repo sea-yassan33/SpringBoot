@@ -73,3 +73,16 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 - データベースを操作するための簡易言語
 
 ## Criteria APIによるデータ操作
+- Java用のデータベース管理
+
+## データベース操作のパフォーマンス比較
+- 10万件のDBに対して、ランダムな1件を引いてくることを1000回ずつ実行
+- その実行を５回ずつ繰り返す。
+- 実行平均（合計実行時間 / 5）を算出。
+- Native Queryを基準にCriteria APIは２倍、JPQLは3倍実行に時間がかかる。
+
+|クエリ|時間（ミリ秒）|
+|:----|:----|
+|Native Query|421|
+|JPQL|1232|
+|Criteria API|804|

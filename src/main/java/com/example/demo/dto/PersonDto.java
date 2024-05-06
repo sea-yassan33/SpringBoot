@@ -10,6 +10,9 @@ import com.example.demo.dao.PersonDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 @Repository
 public class PersonDto implements PersonDao<Person>{
@@ -26,22 +29,41 @@ public class PersonDto implements PersonDao<Person>{
 	
 	@Override
 	public List<Person> getAll(){
-		//クエリ文の生成
-		Query query = entityManager.createQuery("from Person");
-		//クエリ実行
-		@SuppressWarnings("unchecked")
-		List<Person> list = query.getResultList();
-		entityManager.close();
+		List<Person> list = null;
+		// CriteriaBuilderのインスタンスを生成
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		// CriteriaQuery（Criteria APIのクラス）を生成
+		CriteriaQuery<Person> query = builder.createQuery(Person.class);
+		// CriteriaQueryのfromメソッドを取得
+		Root<Person> root = query.from(Person.class);
+		// Query文の生成
+		query.select(root);
+		// Query実行
+		list = (List<Person>)entityManager.createQuery(query).getResultList();
 		return list;
 	}
 
 	@Override
 	public List<Person> findById(long id) {
-		//クエリ文の生成
-		Query query = entityManager.createQuery("from Person where id =" + id );
-		//クエリ実行
-		@SuppressWarnings("unchecked")
-		List<Person> list = query.getResultList();
+		/* (参考)JPQLによるデータ操作
+		 * Query query = entityManager.createQuery("from Person where id =" + id );
+		 * @SuppressWarnings("unchecked")
+		 * List<Person> list = query.getResultList();
+		 */
+		
+		// Personリストを生成
+		List<Person> list = null;
+		// CriteriaBuilderのインスタンスを生成
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		// CriteriaQuery（Criteria APIのクラス）を生成
+		CriteriaQuery<Person> query = builder.createQuery(Person.class);
+		// CriteriaQueryのfromメソッドを取得
+		Root<Person> root = query.from(Person.class);
+		// Query文の生成
+		query.select(root);
+		query.where(builder.equal(root.get("id"), id));
+		// Query実行
+		list = (List<Person>)entityManager.createQuery(query).getResultList();
 		return list;
 	}
 
@@ -74,6 +96,4 @@ public class PersonDto implements PersonDao<Person>{
 		list  = query.getResultList();
 		return list;
 	}
-	
-	
 }
